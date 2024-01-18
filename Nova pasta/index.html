@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CADASTRO</title>
+</head>
+
+    <style>
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: rgb(183, 183, 96);
+    font-size: 20px;
+    font-family: Arial, sans-serif; 
+}
+
+input {
+    font-size: 20px;
+    padding: 10px; 
+    margin-top: 3px;
+    margin-left: 0px;
+    outline: none;
+    border-radius: 5px;
+}
+
+label {
+    padding: 15px;
+    margin-right: 1px;
+    font-weight: bold; 
+}
+
+button {
+    margin-top: 13px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: rgb(18, 143, 184);
+    text-align: center;
+    margin-left: 38%;
+    border-radius: 2px; 
+    color: white; 
+    padding: 10px 20px; 
+    transition: background-color 0.2s ease; /* Adiciona uma transição suave */
+}
+
+.cad {
+    height: 380px;
+    width: 850px;
+    background-color: rgb(104, 228, 222);
+    border-radius: 15px; 
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.15); /* Adicionado sombra para dar um efeito 3D */
+}
+
+h1 {
+    text-align: center;
+    color: rgb(1, 48, 64); /* Deixa a cor do texto combinando com o botão */
+}
+
+#nome, #idade {
+    margin-right: -1px;
+}
+
+button:hover {
+    background-color: rgb(14, 114, 147); } /* Muda a cor de fundo quando o mouse passa sobre o botão */
+
+    </style>
+
+<body>
+
+    <div class="cad">
+        <h1>Cadastro de usuário: </h1>
+        
+        <form method="post" action="envia.php">
+
+            <label for="nome">NOME: </label>
+            <input type="text" id="nome" name="nome" size="60" maxlength="100" required placeholder="Seu nome completo."> <br><br><br>
+
+            <label for="nome">IDADE: </label>
+            <input type="number" id="idade" name="idade" placeholder="Sua idade." required>
+
+            <label for="nome">CPF: </label>
+            <input type="text" id="cpf" name="cpf" size="25" maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"." placeholder="Formato do CPF: 000.000.000-00"  required title="Seu cpf no formato original: 000.000.000-01"> <br><br><br>
+
+            <button type="submit" class="button">CADASTRAR ✅ </button> 
+            
+        </form>
+        
+    </div>
+        
+</body>
+
+</html>
