@@ -3,51 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecebeDados<</title>
+    <title>RecebeDados</title>
 </head>
 
-    <body>
+<body>
     
-        <?php 
-        
-            $conexao = mysqli_connect("localhost","root","","teste2");
-            
-    // Checar conexão
-        
-            if (!$conexao){
-                echo "NÃO CONECTADO!";
-            }
+    <?php 
 
+        // Usando PDO em vez de mysqli para uma conexão mais segura
+        try {
+            $conexao = new PDO('mysql:host=localhost;dbname=teste2', 'root', '');
+            $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             echo " ✅ Conexão com banco de dados: OK!  >>>>>> ";
+        } catch(PDOException $e) {
+            echo 'NÃO CONECTADO! Erro: ' . $e->getMessage();
+        }
 
+        // Preparando a consulta SQL para evitar SQL Injection
+        $stmt = $conexao->prepare("SELECT cpf FROM dados WHERE cpf = :cpf");
+        $stmt->bindParam(':cpf', $_POST['cpf']);
+        $stmt->execute();
 
-    // verificar se o cpf já foi cadastrado pois só cadastra cpf novo
-    
-            $cpf = $_POST['cpf'];
-            $cpf = mysqli_real_escape_string($conexao, $cpf);
-            $sql = "SELECT cpf FROM teste2.dados WHERE cpf='$cpf'";
-            $retorno = mysqli_query($conexao,$sql);
-
-
-            if(mysqli_num_rows($retorno)>0) {
-                echo "CPF já cadastrado! <br>";
-        
-            } else {
-
-                $cpf = $_POST['cpf'];
-                $idade = $_POST['idade'];
-                $nome = $_POST['nome'];
-
-
-            $sql = "INSERT INTO  teste2.dados(cpf,idade,nome) values ('$cpf','$idade','$nome')";
-            $resultado = mysqli_query($conexao, $sql);
-            
+        if($stmt->rowCount() > 0) {
+            echo "CPF já cadastrado! <br>";
+        } else {
+            $stmt = $conexao->prepare("INSERT INTO dados (cpf, idade, nome) VALUES (:cpf, :idade, :nome)");
+            $stmt->bindParam(':cpf', $_POST['cpf']);
+            $stmt->bindParam(':idade', $_POST['idade']);
+            $stmt->bindParam(':nome', $_POST['nome']);
+            $stmt->execute();
             echo " >>>> CADASTRADO COM SUCESSO! <BR>";
-        
-            }
-        ?>
+        }
+    ?>
 
-    </body>
+</body>
 
 </html>
-
